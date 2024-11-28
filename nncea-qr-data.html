@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>PACKAGE INFORMATION</title>
+    <script>
+        // Function to get query parameters from URL
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                name: params.get("name") || "Unknown Recipient",
+                destination: params.get("destination") || "Unknown Destination"
+            };
+        }
+
+        // Dynamically insert values into the page
+        function populateDeliveryInfo() {
+            const { name, destination } = getQueryParams();
+            document.getElementById("recipient").innerText = name;
+            document.getElementById("destination").innerText = destination;
+        }
+
+        // Run the function when the page loads
+        window.onload = populateDeliveryInfo;
+    </script>
 </head>
 <body>
     <h1>DELIVERY INFORMATION</h1>
-    <p><b>PACKAGE RECIPIENT:</b> {{NAME}}<br><b>PACKAGE DESTINATION:</b> {{DESTINATION}}</p>
+    <p>
+        <b>PACKAGE RECIPIENT:</b> <span id="recipient">{{NAME}}</span> <br>
+        <b>PACKAGE DESTINATION:</b> <span id="destination">{{DESTINATION}}</span><br>
+    </p>
 </body>
 </html>
