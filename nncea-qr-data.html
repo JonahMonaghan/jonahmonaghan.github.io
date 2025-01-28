@@ -8,6 +8,7 @@
         function getQueryParams() {
             const params = new URLSearchParams(window.location.search);
             return {
+                order_number: params.get('order-number') || "Unknown Order Number",
                 name: params.get("name") || "Unknown Recipient",
                 destination: params.get("destination") || "Unknown Destination"
             };
@@ -15,7 +16,8 @@
 
         // Dynamically insert values into the page
         function populateDeliveryInfo() {
-            const { name, destination } = getQueryParams();
+            const { order_number, name, destination } = getQueryParams();
+            document.getElementById("order-number").innerText = order_number;
             document.getElementById("recipient").innerText = name;
             document.getElementById("destination").innerText = destination;
         }
@@ -23,10 +25,56 @@
         // Run the function when the page loads
         window.onload = populateDeliveryInfo;
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        p {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            line-height: 1.6;
+        }
+        b {
+            display: block;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        span {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.95em;
+            color: #555;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            p {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>DELIVERY INFORMATION</h1>
     <p>
+        <b>ORDER NUMBER: </b> <span id="order-number">{{NAME}}</span> <br>
         <b>PACKAGE RECIPIENT:</b> <span id="recipient">{{NAME}}</span> <br>
         <b>PACKAGE DESTINATION:</b> <span id="destination">{{DESTINATION}}</span><br>
     </p>
